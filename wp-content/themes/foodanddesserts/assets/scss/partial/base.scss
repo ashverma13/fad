@@ -6,6 +6,8 @@
 	-webkit-font-smoothing: antialiased;
 	font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
+	margin:0;
+	padding:0;
 }
 
 /* html element 62.5% font-size for REM use */
@@ -14,12 +16,21 @@ html {
 	font-size: 62.5%;
 }
 
+img {
+	max-width:100%;
+}
+
 body {
 	font-family:$primaryFonts;
 	margin: 0;
 	word-break: break-word;
 	-webkit-word-break: break-word;
 	-moz-osx-font-smoothing:grayscale;
+	color:$textColor;
+}
+
+p {
+	margin:0;
 }
 
 h1,
@@ -36,8 +47,16 @@ div,
 input,
 select,
 textarea,
-.widget_text p, .widget_text ol, .widget_text ul, .widget_text dl, .widget_text dt, .widget-content .rssSummary {
+.widget_text p, .widget_text ol, .widget_text ul, .widget_text dl, .widget_text dt, .widget-content .rssSummary,
+.entry-content h1, .entry-content h2, .entry-content h3, .entry-content h4, .entry-content h5, .entry-content h6, .entry-content cite, .entry-content figcaption, .entry-content table, .entry-content address, .entry-content .wp-caption-text, .entry-content .wp-block-file,
+.has-drop-cap:not(:focus)::first-letter, .entry-content .wp-block-archives, .entry-content .wp-block-categories, .entry-content .wp-block-latest-posts, .entry-content .wp-block-latest-comments, .entry-content .wp-block-cover-image p, .entry-content .wp-block-pullquote,
+input, textarea, button, .button, .faux-button, .faux-button.more-link, .wp-block-button__link, .wp-block-file__button {
 	font-family:$primaryFonts;
 	line-height:1.6;
+	letter-spacing:0;
+	color:$textColor;
+}
+
+.wp-block-latest-posts a, .wp-block-latest-comments__comment-meta {
 	letter-spacing:0;
 }

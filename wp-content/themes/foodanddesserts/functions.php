@@ -759,3 +759,74 @@ function twentytwenty_get_elements_array() {
 	*/
 	return apply_filters( 'twentytwenty_get_elements_array', $elements );
 }
+
+function slick_style(){
+	wp_enqueue_style('slick-slider-featured', get_template_directory_uri().'/assets/css/slick.css', array(), '1.0');
+}
+function slick_script() {
+	wp_enqueue_script('slick-slider-featured', get_template_directory_uri().'/assets/js/slick.min.js', array( 'jquery' ), '1.0', true);
+	wp_enqueue_script('slick-slider-custom', get_template_directory_uri().'/assets/js/slider.js');
+}
+add_action('wp_enqueue_scripts', 'slick_style');
+add_action('wp_enqueue_scripts', 'slick_script');
+
+function wpb_latest_sticky() { 
+ 
+	/* Get all sticky posts */
+	$sticky = get_option( 'sticky_posts' );
+	 
+	/* Sort the stickies with the newest ones at the top */
+	rsort( $sticky );
+	 
+	/* Get the 5 newest stickies (change 5 for a different number) */
+	$sticky = array_slice( $sticky, 0, 8 );
+	 
+	/* Query sticky posts */
+	$the_query = new WP_Query( array( 'post__in' => $sticky, 'ignore_sticky_posts' => 1 ) );
+	// The Loop
+	if ( $the_query->have_posts() ) {
+		$return .= '<div class="featured-posts-slider slick-slider-featured">';
+		while ( $the_query->have_posts() ) {
+			$the_query->the_post();
+			$return .= '<div class="slick-slide"><a class="link-full" href="' . get_permalink() . '"></a><span class="post-slide-image" style="background-image:url(' . get_the_post_thumbnail_url() . ');"></span><div class="post-slide-content"><span class="post-slide-title" title="'  . get_the_title() . '">' . get_the_title() . '</span><div class="post-slide-description">' . get_the_excerpt(). '</div></div></div>';
+			
+		}
+		$return .= '</div>';
+		
+	} else {
+		// no posts found
+	}
+	/* Restore original Post Data */
+	wp_reset_postdata();
+		
+	return $return; 
+		
+} 
+add_shortcode('latest_stickies', 'wpb_latest_sticky');
+
+function wpb_latest_categories() {
+	$args = array(
+		'type' => 'post',
+		'parent' => 0,          // Gets only top level categories
+		'orderby' => 'count',   // Orders the list by post count
+		'order' => 'desc',
+		'hide_empty' => 1,      // Hides categories with no posts
+		'number' => 5,         // No of categories to return
+		'taxonomy' => 'category'
+	);
+	$top_categories = get_categories( $args );
+	
+	$return = "<div class='recipe-cat-container'><h2 class='recipe-cat-title'>Categories</h2><ul>";
+	foreach ( $top_categories as $category ) {
+		$image_url = z_taxonomy_image_url( $category->term_id );
+		$return .= '<li><a href="' . get_category_link( $category->term_id ) . '"><span style="background-image:url(' . $image_url . ')"></span>' . $category->name . '</a></li>';
+	}
+	$return .= "</ul></div>";
+	return $return;
+}
+add_shortcode('latest_categories', 'wpb_latest_categories');
+
+function new_excerpt_more($more) {
+	return '... <a class="read-more" href="' . get_permalink( get_the_ID() ) . '">Read More</a>';
+}
+add_filter('excerpt_more', 'new_excerpt_more');
