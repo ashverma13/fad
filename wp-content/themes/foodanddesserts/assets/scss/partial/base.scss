@@ -8,12 +8,15 @@
 	text-rendering: optimizeLegibility;
 	margin:0;
 	padding:0;
+	outline:none;
 }
 
 /* html element 62.5% font-size for REM use */
 /* 1rem = 10px */
 html {
 	font-size: 62.5%;
+	position:static!important;
+	overflow:auto!important;
 }
 
 img {
@@ -55,6 +58,10 @@ input, textarea, button, .button, .faux-button, .faux-button.more-link, .wp-bloc
 	line-height:1.6;
 	letter-spacing:0;
 	color:$textColor;
+}
+
+input[type="search"]:focus {
+	outline:none;
 }
 
 .wp-block-latest-posts a, .wp-block-latest-comments__comment-meta {
