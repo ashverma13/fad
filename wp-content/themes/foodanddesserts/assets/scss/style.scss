@@ -237,16 +237,17 @@ ul.social-icons {
 }
 
 .custom-container {
-	max-width:960px!important;
+	max-width:100%!important;
 	margin:0 auto!important;
+	padding:0 20px!important;
 }
 
 .latest-home-posts {
 	display:grid!important;
-	grid-template-columns:calc(33.3334% - 20px) calc(33.3334% - 20px) calc(33.3334% - 20px);
-	grid-gap:30px;
+	grid-template-columns:repeat(4, 1fr);
+	grid-gap:20px;
 	&:before {
-		grid-column:1 / 4;
+		grid-column:1 / 5;
 		content:"Latest Recipes";
 		font-size:4.4rem;
 		text-align:center;
@@ -444,7 +445,7 @@ ul.social-icons {
 		}
 	}
 	.search-field {
-		height:60px;
+		height:59px;
 		font-size:1.6rem;
 		&::placeholder {
 			line-height:revert;
