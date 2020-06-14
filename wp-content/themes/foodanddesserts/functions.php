@@ -826,7 +826,62 @@ function wpb_latest_categories() {
 }
 add_shortcode('latest_categories', 'wpb_latest_categories');
 
+function tn_custom_excerpt_length( $length ) {
+	return 17;
+}
+add_filter( 'excerpt_length', 'tn_custom_excerpt_length', 999 );
+
 function new_excerpt_more($more) {
-	return '... <a class="read-more" href="' . get_permalink( get_the_ID() ) . '">Read More</a>';
+	return '... <a class="read-more" href="' . get_permalink() . '">Read More</a>';
 }
 add_filter('excerpt_more', 'new_excerpt_more');
+
+function my_custom_sidebar() {
+	register_sidebar(
+		array (
+			'name' => __( 'Custom', 'your-theme-domain' ),
+			'id' => 'custom-side-bar',
+			'description' => __( 'Custom Sidebar', 'your-theme-domain' ),
+			'before_widget' => '<div class="widget-content">',
+			'after_widget' => "</div>",
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>',
+		)
+	);
+}
+add_action( 'widgets_init', 'my_custom_sidebar' );
+
+function get_excerpt( $count ) {
+	$permalink = get_permalink($post->ID);
+	$excerpt = get_the_excerpt();
+	$excerpt = strip_tags($excerpt);
+	$excerpt = substr($excerpt, 0, $count);
+	$excerpt = $excerpt.'... <a class="read-more" href="'.$permalink.'">Read More</a>';
+	return $excerpt;
+}
+
+add_filter( 'widget_posts_args', function( array $args ) {
+	add_filter( 'the_title', 'wpse_prepend_thumbnail', 10, 2 );
+	add_action( 'loop_end',  'wpse_clean_up' );
+	return $args;
+} );
+
+function wpse_prepend_thumbnail( $title, $post_id ) {
+	static $instance = 0;
+	$title = '<span class="lp-grid"><span class="lp-thumb">' . get_the_post_thumbnail( $post_id ) . '</span>' .  '<span class="lp-title">' . $title . '</span></span>';
+	return $title;
+} 
+
+function wpse_clean_up( \WP_Query $q ) {
+	remove_filter( current_filter(), __FUNCTION__ );
+	remove_filter( 'the_title', 'wpse_add_thumnail', 10 );
+}
+
+function wpb_move_comment_field_to_bottom( $fields ) {
+	$comment_field = $fields['comment'];
+	unset( $fields['comment'] );
+	$fields['comment'] = $comment_field;
+	return $fields;
+}
+	 
+add_filter( 'comment_form_fields', 'wpb_move_comment_field_to_bottom' );

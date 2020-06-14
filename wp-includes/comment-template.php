@@ -1955,11 +1955,11 @@ function comment_form_title( $noreplytext = false, $replytext = false, $linktopa
 	global $comment;
 
 	if ( false === $noreplytext ) {
-		$noreplytext = __( 'Leave a Reply' );
+		$noreplytext = __( 'Leave a Comment' );
 	}
 	if ( false === $replytext ) {
 		/* translators: %s: Author of the comment being replied to. */
-		$replytext = __( 'Leave a Reply to %s' );
+		$replytext = __( 'Leave a Comment' );
 	}
 
 	$replytoid = isset( $_GET['replytocom'] ) ? (int) $_GET['replytocom'] : 0;
@@ -2328,18 +2328,6 @@ function comment_form( $args = array(), $post_id = null ) {
 				$html_req
 			)
 		),
-		'url'    => sprintf(
-			'<p class="comment-form-url">%s %s</p>',
-			sprintf(
-				'<label for="url">%s</label>',
-				__( 'Website' )
-			),
-			sprintf(
-				'<input id="url" name="url" %s value="%s" size="30" maxlength="200" />',
-				( $html5 ? 'type="url"' : 'type="text"' ),
-				esc_attr( $commenter['comment_author_url'] )
-			)
-		),
 	);
 
 	if ( has_action( 'set_comment_cookies', 'wp_set_comment_cookies' ) && get_option( 'show_comments_cookies_opt_in' ) ) {
@@ -2380,14 +2368,6 @@ function comment_form( $args = array(), $post_id = null ) {
 
 	$defaults = array(
 		'fields'               => $fields,
-		'comment_field'        => sprintf(
-			'<p class="comment-form-comment">%s %s</p>',
-			sprintf(
-				'<label for="comment">%s</label>',
-				_x( 'Comment', 'noun' )
-			),
-			'<textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea>'
-		),
 		'must_log_in'          => sprintf(
 			'<p class="must-log-in">%s</p>',
 			sprintf(
@@ -2425,9 +2405,9 @@ function comment_form( $args = array(), $post_id = null ) {
 		'class_form'           => 'comment-form',
 		'class_submit'         => 'submit',
 		'name_submit'          => 'submit',
-		'title_reply'          => __( 'Leave a Reply' ),
+		'title_reply'          => __( 'Leave a Comment' ),
 		/* translators: %s: Author of the comment being replied to. */
-		'title_reply_to'       => __( 'Leave a Reply to %s' ),
+		'title_reply_to'       => __( 'Leave a Comment' ),
 		'title_reply_before'   => '<h3 id="reply-title" class="comment-reply-title">',
 		'title_reply_after'    => '</h3>',
 		'cancel_reply_before'  => ' <small>',
@@ -2437,6 +2417,14 @@ function comment_form( $args = array(), $post_id = null ) {
 		'submit_button'        => '<input name="%1$s" type="submit" id="%2$s" class="%3$s" value="%4$s" />',
 		'submit_field'         => '<p class="form-submit">%1$s %2$s</p>',
 		'format'               => 'xhtml',
+		'comment_field'        => sprintf(
+			'<p class="comment-form-comment">%s %s</p>',
+			sprintf(
+				'<label for="comment">%s</label>',
+				_x( 'Comment', 'noun' )
+			),
+			'<textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea>'
+		),
 	);
 
 	/**

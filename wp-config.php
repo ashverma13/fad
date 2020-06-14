@@ -37,6 +37,9 @@ define( 'DB_CHARSET', 'utf8' );
 /** The Database Collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
 
+/** Stop Automatic wordpress updates. */
+define( 'WP_AUTO_UPDATE_CORE', false );
+
 /**#@+
  * Authentication Unique Keys and Salts.
  *

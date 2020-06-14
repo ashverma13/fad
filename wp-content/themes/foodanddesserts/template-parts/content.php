@@ -13,32 +13,43 @@
 
 ?>
 
-<article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
+<?php if ( is_single() ) {
+	get_template_part( 'template-parts/entry-header-single' );
+	if( is_single() ) { ?>
+		<div class="custom-container">
+			<div class="with-sidebar">
+	<?php }
+} ?>
+
+
+
+<li <?php post_class(); ?> id="post-<?php the_ID(); ?>">
 
 	<?php
 
-	get_template_part( 'template-parts/entry-header' );
 
 	if ( ! is_search() ) {
 		get_template_part( 'template-parts/featured-image' );
+		if( ! is_single() ) {
+			get_template_part( 'template-parts/entry-header' );
+		}
 	}
 
 	?>
 
-	<div class="post-inner <?php echo is_page_template( 'templates/template-full-width.php' ) ? '' : 'thin'; ?> ">
+	<div class="wp-block-latest-posts__post-excerpt">
 
-		<div class="entry-content">
-
-			<?php
-			if ( is_search() || ! is_singular() && 'summary' === get_theme_mod( 'blog_content', 'full' ) ) {
-				the_excerpt();
-			} else {
-				the_content( __( 'Continue reading', 'twentytwenty' ) );
-			}
-			?>
-
-		</div><!-- .entry-content -->
-
+		<?php
+		if ( is_search() || ! is_singular() && 'summary' === get_theme_mod( 'blog_content', 'full' ) ) {
+			echo '<div class="mobileOnly">' . get_excerpt(60) . '</div>';
+			echo '<div class="desktopOnly">';
+			the_excerpt();
+			echo '</div>';
+		} else {
+			the_content( __( '', 'twentytwenty' ) );
+		}
+		?>
+	
 	</div><!-- .post-inner -->
 
 	<div class="section-inner">
@@ -91,4 +102,15 @@
 	}
 	?>
 
-</article><!-- .post -->
+</li><!-- .post -->
+
+
+<?php 
+	if( is_single() ) {
+		if ( is_active_sidebar( 'custom-side-bar' ) ) :
+			?> <div class="site-sidebar"> <?php
+			dynamic_sidebar( 'custom-side-bar' );
+			?> </div></div></div><?php
+		endif;
+	}
+?>

@@ -12,9 +12,7 @@
 get_header();
 ?>
 
-<main id="site-content" role="main">
-
-	<?php
+<main id="site-content" role="main"> <?php
 
 	if ( have_posts() ) {
 
@@ -26,7 +24,6 @@ get_header();
 	}
 
 	?>
-
 </main><!-- #site-content -->
 
 <?php get_template_part( 'template-parts/footer-menus-widgets' ); ?>

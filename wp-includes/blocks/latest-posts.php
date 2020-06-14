@@ -106,6 +106,7 @@ function render_block_core_latest_posts( $attributes ) {
 			&& isset( $attributes['displayPostContentRadio'] ) && 'excerpt' === $attributes['displayPostContentRadio'] ) {
 
 			$trimmed_excerpt = get_the_excerpt( $post );
+			$trimmed_excerpt = substr($trimmed_excerpt, 0, 60);
 
 			$list_items_markup .= sprintf(
 				'<div class="wp-block-latest-posts__post-excerpt">%1$s',
@@ -114,13 +115,15 @@ function render_block_core_latest_posts( $attributes ) {
 
 			if ( strpos( $trimmed_excerpt, ' &hellip; ' ) !== false ) {
 				$list_items_markup .= sprintf(
-					'<a href="%1$s">%2$s</a></div>',
+					'... <a class="read-more" href="%1$s">%2$s</a></div>',
 					esc_url( get_permalink( $post ) ),
 					__( 'Read more' )
 				);
 			} else {
 				$list_items_markup .= sprintf(
-					'</div>'
+					'... <a class="read-more" href="%1$s">%2$s</a></div>',
+					esc_url( get_permalink( $post ) ),
+					__( 'Read more' )
 				);
 			}
 		}

@@ -17,27 +17,13 @@ if ( has_post_thumbnail() && ! post_password_required() ) {
 	}
 	?>
 
-	<figure class="featured-media">
-
-		<div class="featured-media-inner section-inner<?php echo $featured_media_inner_classes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?>">
+		<div class="wp-block-latest-posts__featured-image aligncenter">
 
 			<?php
-			the_post_thumbnail();
-
-			$caption = get_the_post_thumbnail_caption();
-
-			if ( $caption ) {
-				?>
-
-				<figcaption class="wp-caption-text"><?php echo esc_html( $caption ); ?></figcaption>
-
-				<?php
-			}
+				the_post_thumbnail();
 			?>
 
 		</div><!-- .featured-media-inner -->
-
-	</figure><!-- .featured-media -->
 
 	<?php
 }

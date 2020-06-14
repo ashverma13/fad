@@ -54,40 +54,44 @@ get_header();
 
 	if ( $archive_title || $archive_subtitle ) {
 		?>
-
-		<header class="archive-header has-text-align-center header-footer-group">
-
-			<div class="archive-header-inner section-inner medium">
-
-				<?php if ( $archive_title ) { ?>
-					<h1 class="archive-title"><?php echo wp_kses_post( $archive_title ); ?></h1>
-				<?php } ?>
-
-				<?php if ( $archive_subtitle ) { ?>
-					<div class="archive-subtitle section-inner thin max-percentage intro-text"><?php echo wp_kses_post( wpautop( $archive_subtitle ) ); ?></div>
-				<?php } ?>
-
-			</div><!-- .archive-header-inner -->
-
-		</header><!-- .archive-header -->
+		<?php $image_url = z_taxonomy_image_url( $category->term_id ); ?>
+		<div class="blog-featured-image" style="background-image:url(<?php echo $image_url ?>)">
+			<div class="custom-container">
+				<h2 class="page-title"><?php echo wp_kses_post( $archive_title ); ?></h2>
+			</div>
+		</div>
 
 		<?php
 	}
 
 	if ( have_posts() ) {
+		?>
+			<?php
+				if (is_home() && get_option('page_for_posts')) {
+					$img = wp_get_attachment_image_src(get_post_thumbnail_id(get_option('page_for_posts')),'full'); 
+					$featured_image = $img[0];
+					?>
+						<div class="blog-featured-image" style="background-image:url(<?php echo $featured_image ?>)">
+							<div class="custom-container">
+								<h2 class="page-title"><?php wp_title( ' ', true, '' ); ?></h2>
+							</div>
+						</div>
+					<?php
+				}
+			?>
+			<div class="latest-post-group blog-grid">
+				<ul class="wp-block-latest-posts wp-block-latest-posts__list alignwide is-grid columns-4 latest-home-posts custom-container">
+					<?php
+					while ( have_posts() ) {
+						the_post();
 
-		$i = 0;
+						get_template_part( 'template-parts/content', get_post_type() );
 
-		while ( have_posts() ) {
-			$i++;
-			if ( $i > 1 ) {
-				echo '<hr class="post-separator styled-separator is-style-wide section-inner" aria-hidden="true" />';
-			}
-			the_post();
-
-			get_template_part( 'template-parts/content', get_post_type() );
-
-		}
+					}
+					?>
+				</ul>
+			</div>
+		<?php
 	} elseif ( is_search() ) {
 		?>
 
