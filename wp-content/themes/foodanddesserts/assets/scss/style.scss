@@ -641,6 +641,11 @@ li.post {
 	border-radius:3px;
 	padding:20px;
 	margin-top:20px;
+	.search-form {
+		h2 {
+			display:none;
+		}
+	}
 	.social-menu {
 		justify-content:space-between;
 		width:100%;
@@ -784,7 +789,7 @@ li.post {
 			font-size:16px;
 			color:$textColor;
 			line-height:1.4;
-			span {
+			span, strong {
 				font-weight:bold;
 				text-transform:uppercase;
 				color:$postColor;
