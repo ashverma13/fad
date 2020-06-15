@@ -31,10 +31,10 @@ if ( $comments ) {
 			<h2 class="comment-reply-title">
 			<?php
 			if ( ! have_comments() ) {
-				_e( 'Leave a comment', 'twentytwenty' );
+				_e( 'Reply', 'twentytwenty' );
 			} elseif ( '1' === $comments_number ) {
 				/* translators: %s: Post title. */
-				printf( _x( 'Comment', 'comments title', 'twentytwenty' ), get_the_title() );
+				printf( _x( 'Reply', 'comments title', 'twentytwenty' ), get_the_title() );
 			} else {
 				printf(
 					/* translators: 1: Number of comments, 2: Post title. */
@@ -103,12 +103,12 @@ if ( $comments ) {
 if ( comments_open() || pings_open() ) {
 
 	if ( $comments ) {
-		echo '<hr class="styled-separator is-style-wide" aria-hidden="true" />';
+		echo '<hr class="post-sep" aria-hidden="true" />';
 	}
 
 	comment_form(
 		array(
-			'class_form'         => 'section-inner thin max-percentage',
+			'class_form'         => 'section-inner',
 			'title_reply_before' => '<h2 id="reply-title" class="comment-reply-title">',
 			'title_reply_after'  => '</h2>',
 		)

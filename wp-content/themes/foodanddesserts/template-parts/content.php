@@ -28,12 +28,10 @@
 	<?php
 
 
-	if ( ! is_search() ) {
 		get_template_part( 'template-parts/featured-image' );
 		if( ! is_single() ) {
 			get_template_part( 'template-parts/entry-header' );
 		}
-	}
 
 	?>
 

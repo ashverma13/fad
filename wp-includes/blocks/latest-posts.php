@@ -107,9 +107,10 @@ function render_block_core_latest_posts( $attributes ) {
 
 			$trimmed_excerpt = get_the_excerpt( $post );
 			$trimmed_excerpt = substr($trimmed_excerpt, 0, 60);
+			$final_excerpt = get_the_excerpt( $post );
 
 			$list_items_markup .= sprintf(
-				'<div class="wp-block-latest-posts__post-excerpt">%1$s',
+				'<div class="wp-block-latest-posts__post-excerpt"><div class="mobileOnly">%1$s',
 				$trimmed_excerpt
 			);
 
@@ -119,11 +120,19 @@ function render_block_core_latest_posts( $attributes ) {
 					esc_url( get_permalink( $post ) ),
 					__( 'Read more' )
 				);
+				$list_items_markup .= sprintf(
+					'<div class="desktopOnly">%1$s</div></div>',
+					$final_excerpt
+				);
 			} else {
 				$list_items_markup .= sprintf(
 					'... <a class="read-more" href="%1$s">%2$s</a></div>',
 					esc_url( get_permalink( $post ) ),
 					__( 'Read more' )
+				);
+				$list_items_markup .= sprintf(
+					'<div class="desktopOnly">%1$s</div></div>',
+					$final_excerpt
 				);
 			}
 		}
